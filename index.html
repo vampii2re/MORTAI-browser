@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MORTAI - Simple Web Browser</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .browser {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex-grow: 1;
+            padding: 8px;
+        }
+        button {
+            padding: 8px 20px;
+        }
+        #message {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser">
+        <header>
+            <h1>MORTAI</h1>
+            <input type="text" id="url" placeholder="Enter URL here..." />
+            <button id="goButton">Go</button>
+        </header>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('goButton').addEventListener('click', function() {
+            const urlInput = document.getElementById('url').value;
+            const messageDiv = document.getElementById('message');
+            
+            if (isValidUrl(urlInput)) {
+                // Open URL in new tab
+                window.open(urlInput, '_blank');
+                messageDiv.textContent = `Opening ${urlInput} in a new tab...`;
+            } else {
+                messageDiv.textContent = 'Please enter a valid URL starting with http:// or https://';
+            }
+        });
+
+        function isValidUrl(string) {
+            try {
+                const url = new URL(string);
+                return url.protocol === "http:" || url.protocol === "https:";
+            } catch (_) {
+                return false;
+            }
+        }
+
+        // Add example URLs
+        const messageDiv = document.getElementById('message');
+        messageDiv.innerHTML = `
+            Try these example URLs:<br>
+            - https://www.example.com<br>
+            - https://www.wikipedia.org<br>
+            - https://www.weather.com
+        `;
+    </script>
+</body>
+</html>
